@@ -1,0 +1,8 @@
+create table public.member (
+	id	varchar(20)	not null primary key
+	, pw varchar(500)	not null
+	, isAccountNonExpired boolean default true	-- 이메일 인증 시, 이 중 한 가지를 활용
+	, isAccountNonLocked boolean default true
+	, isCredentialNonExpired boolean default true
+	, isEnabled boolean default true
+);

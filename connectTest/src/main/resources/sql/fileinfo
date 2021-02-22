@@ -1,0 +1,13 @@
+create table public.fileinfo (
+	fileno int not null primary key
+	, uploader varchar(15) not null -- 얘도 cascade
+	, title varchar(100) not null
+	, uploaddate varchar(100) not null
+	, size bigint not null	not null
+	, originalFileName varchar(100) not null
+	, savedFileName varchar(100) not null
+	, constraint fileinfo_id_constraint FOREIGN KEY(uploader) REFERENCES public.member(id)
+);
+
+
+CREATE SEQUENCE seq_fileinfo START 1;

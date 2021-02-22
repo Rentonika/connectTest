@@ -1,0 +1,8 @@
+create table public.member_authority (
+	id int not null primary key
+	, member_id varchar(20) 
+	, authority_name varchar(20)
+	, constraint id_constraint FOREIGN KEY(member_id) REFERENCES public.member(id)
+);
+
+CREATE SEQUENCE seq_authority START 1;

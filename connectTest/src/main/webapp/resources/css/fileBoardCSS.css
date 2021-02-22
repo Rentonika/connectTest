@@ -1,0 +1,8 @@
+@charset "UTF-8";
+
+#deleteBtn {
+	height: 14px; 
+	width: 20px; 
+	padding: 5px;
+	cursor: pointer;
+}
