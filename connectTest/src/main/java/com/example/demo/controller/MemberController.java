@@ -138,8 +138,8 @@ public class MemberController {
 		// refreshToken 유효 여부
 		Boolean isRefresh = jwtTokenProvider.validateToken(refreshToken);
 				
-		// access -> 유효, refresh -> 유효
-		if(isAccess && isRefresh) {
+		// access -> 유효
+		if(isAccess) {
 			// 굳이 새 토큰을 발급할 필요가 없는 상황 // 테스트용
 			// 가끔 씹힘 -> 왜?
 			logger.info("accessToken already exitsts");
@@ -181,29 +181,30 @@ public class MemberController {
 	public Map<String, String> logout(@RequestBody Map<String, String> tokens) {
 	 
 		String accessToken = tokens.get("accessToken");
-		String refreshToken = tokens.get("refreshToken");
+		// String refreshToken = tokens.get("refreshToken");
 		
 		// accessToken 폐기 여부
 		Boolean isAccess = jwtTokenProvider.validateToken(accessToken);
 		// refreshToken 유효 여부
-		Boolean isRefresh = jwtTokenProvider.validateToken(refreshToken);
+		// Boolean isRefresh = jwtTokenProvider.validateToken(refreshToken);
 
 		// Access token 이 활성화 되어 있을 경우 -> Access Token/Refresh Token 삭제 요청
-		if(isAccess && isRefresh) {
+		if(isAccess) { // refreshToken의 활성화 여부와 상관 없이 모두 삭제
 			tokens.put("status", "access"); // status : access -> 클라이언트에서 access & refresh 둘 다 삭제
 			tokens.put("result", "success");
 			tokens.put("msg", "delete both token");
-		} else if(!isAccess && isRefresh) {
+		} /*else if(!isAccess && isRefresh) { // 어차피 authorized 에서 걸러지니 딱히 필요 X
 			// Access token 비활성화, refresh 활성화 -> refresh 필요
 			tokens.put("status", "refresh");
 			tokens.put("result", "fail");
 			tokens.put("msg", "need refresh");
-		} else if(!isAccess && !isRefresh) {
+		} // 어차피 authorized 에서 걸러지니 딱히 필요 X
+		else if(!isAccess && !isRefresh) {
 			// 둘 다 비 활성화 -> 로그인 필요
 			tokens.put("status", "none");
 			tokens.put("result", "fail");
 			tokens.put("msg", "need login");
-		}
+		}*/
 		
 		return tokens;
 	} 
